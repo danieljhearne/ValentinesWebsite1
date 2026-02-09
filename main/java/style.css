@@ -157,3 +157,94 @@ footer a{
 footer a:hover{
   opacity:.8;
 }
+
+/* Pinboard (hidden until YES) */
+.pinboard{
+  display:none;
+  margin-top:18px;
+  padding:14px 12px;
+  border:4px solid var(--hotpink);
+  background:
+    repeating-linear-gradient(0deg, rgba(255,79,163,.08), rgba(255,79,163,.08) 3px, transparent 3px, transparent 10px),
+    #fff;
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+}
+
+.pinboard.show{
+  display:block;
+  animation: popIn .25s ease-out;
+}
+
+@keyframes popIn{
+  from{ transform: translateY(6px); opacity:0; }
+  to{ transform: translateY(0); opacity:1; }
+}
+
+.pinTitle{
+  margin:0 0 6px;
+  text-align:center;
+  font-family:"Shadows Into Light", cursive;
+  color:var(--hotpink);
+  font-size:28px;
+}
+
+.pinSub{
+  margin:0 0 14px;
+  text-align:center;
+  font-size:14px;
+}
+
+/* board grid */
+.board{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap:12px;
+}
+
+/* polaroid-style pin */
+.pin{
+  position:relative;
+  background: #fff;
+  border:3px solid var(--hotpink);
+  box-shadow: 4px 4px 0 var(--pixel-shadow);
+  padding:10px 10px 12px;
+  transform: rotate(var(--r, 0deg));
+}
+
+.pin::before{
+  content:"";
+  position:absolute;
+  top:-8px;
+  left:14px;
+  width:14px;
+  height:14px;
+  background: var(--hotpink);
+  border:2px solid #fff;
+  box-shadow: 2px 2px 0 var(--pixel-shadow);
+}
+
+.pin img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  display:block;
+  border:2px solid rgba(0,0,0,.15);
+}
+
+.pin h3{
+  margin:8px 0 4px;
+  font-size:14px;
+  color:var(--ink);
+}
+
+.pin p{
+  margin:0;
+  font-size:12px;
+  opacity:.85;
+}
+
+/* hide buttons after YES (optional class) */
+.card.accepted .btnRow,
+.card.accepted .status{
+  display:none;
+}

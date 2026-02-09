@@ -13,6 +13,68 @@ const noPhrases = [
   "3 Years in and you are saying no??",
 ];
 
+// --- PINBOARD DATA (edit these!) ---
+// Put your images in a folder like /images/ and reference them here.
+// week is ISO week number (1-53) OR you can just use date and we’ll compute it later if you want.
+const pinEntries = [
+  { date: "2024-02-08", title: "Founding of the NQ date", caption: "bunny tattoo looking fire", img: "main/images/firstNQ.jpg" },
+  { date: "2025-02-14", title: "Valentine Ramen", caption: "Swag", img: "main/images/SickRamen.jpg" },
+  { date: "2024-12-14", title: "Timbark Lovers", caption: "I cant even tell if you are actually drinking", img: "main/images/timbarklianna.jpg" },
+  { date: "2024-12-14", title: "Timbark Lovers", caption: "Autistic eye contact", img: "main/images/timbarkdan.jpg" },
+];
+
+// ISO week number
+function getISOWeek(d) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+}
+
+function fmtDate(iso) {
+  const d = new Date(iso + "T00:00:00");
+  return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+}
+
+function renderPinboard() {
+  const pinboard = document.getElementById("pinboard");
+  const board = document.getElementById("board");
+  const pinSub = document.getElementById("pinSub");
+
+  const now = new Date();
+  const thisWeek = getISOWeek(now);
+
+  pinSub.textContent = `Watch this space. Be here Feb 14th!!`;
+
+  // Filter entries that match this week number
+  const entriesThisWeek = pinEntries.filter(e => getISOWeek(new Date(e.date + "T00:00:00")) === thisWeek);
+
+  board.innerHTML = "";
+
+  const list = entriesThisWeek.length ? entriesThisWeek : pinEntries; // fallback: show all if none match
+
+  list.forEach((e) => {
+    const rot = (Math.random() * 6 - 3).toFixed(2);
+
+    const el = document.createElement("article");
+    el.className = "pin";
+    el.style.setProperty("--r", `${rot}deg`);
+
+    el.innerHTML = `
+      <img src="${e.img}" alt="${e.title}">
+      <h3>${e.title} • ${fmtDate(e.date)}</h3>
+      <p>${e.caption}</p>
+    `;
+
+    board.appendChild(el);
+  });
+
+  pinboard.classList.add("show");
+  pinboard.setAttribute("aria-hidden", "false");
+}
+
+
 function setStatus(html) {
   status.innerHTML = html;
 }
@@ -66,13 +128,23 @@ function confettiBurst() {
   }
 }
 
-
 function lockInYes() {
+  // add a class so CSS can hide the buttons/status
+  const card = yesBtn.closest(".card");
+  if (card) card.classList.add("accepted");
+
   yesBtn.disabled = true;
   noBtn.disabled = true;
+
   setStatus(`💕💕💕<br>Watch this space!!`);
   confettiBurst();
+
+  // show pinboard after a tiny beat
+  setTimeout(() => {
+    renderPinboard();
+  }, 400);
 }
+
 
 /* True teleport within the card (stays inside) */
 function teleportNoButton() {
@@ -139,6 +211,18 @@ function resetAll() {
   noBtn.style.position = "";
   noBtn.style.left = "";
   noBtn.style.top = "";
+
+   const card = yesBtn.closest(".card");
+   if (card) card.classList.remove("accepted");
+
+   const pinboard = document.getElementById("pinboard");
+   const board = document.getElementById("board");
+   if (pinboard) {
+     pinboard.classList.remove("show");
+     pinboard.setAttribute("aria-hidden", "true");
+   }
+   if (board) board.innerHTML = "";
+
 
   setStatus("");
 }
