@@ -17,11 +17,11 @@ const noPhrases = [
 // Put your images in a folder like /images/ and reference them here.
 // week is ISO week number (1-53) OR you can just use date and we’ll compute it later if you want.
 const pinEntries = [
-  { date: "2024-02-08", title: "Founding of the NQ date", caption: "bunny tattoo looking fire", img: "docs/images/firstNQ.jpg" },
-  { date: "2025-02-14", title: "Valentine Ramen", caption: "Swag", img: "docs/images/SickRamen.jpg" },
-  { date: "2024-12-14", title: "Timbark Lovers", caption: "I cant even tell if you are actually drinking", img: "docs/images/timbarklianna.jpg" },
-  { date: "2024-12-14", title: "Timbark Lovers", caption: "Autistic eye contact", img: "docs/images/timbarkdan.jpg" },
-  { date: "2025-08-30", title: "Selfie over Banff", caption: "Only time you smiled was at the top lol", img: "docs/images/BanffSelfie.jpg"}
+  { date: "2024-02-08", title: "Founding of the NQ date", caption: "bunny tattoo looking fire", img: "images/firstNQ.jpg" },
+  { date: "2025-02-14", title: "Valentine Ramen", caption: "Swag", img: "images/SickRamen.jpg" },
+  { date: "2024-12-14", title: "Timbark Lovers", caption: "I cant even tell if you are actually drinking", img: "images/timbarklianna.jpg" },
+  { date: "2024-12-14", title: "Timbark Lovers", caption: "Autistic eye contact", img: "images/timbarkdan.jpg" },
+  { date: "2025-08-30", title: "Selfie over Banff", caption: "Only time you smiled was at the top lol", img: "images/BanffSelfie.jpg"}
 ];
 
 // ISO week number
